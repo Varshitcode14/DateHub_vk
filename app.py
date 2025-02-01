@@ -15,6 +15,7 @@ import time
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from flask_migrate import Migrate
 
 class RateLimiter:
     def __init__(self, limit, per):
@@ -72,6 +73,7 @@ cloudinary.config(
 )
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 mail = Mail(app)
 
 # Set up logging
