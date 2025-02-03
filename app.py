@@ -44,7 +44,7 @@ def rate_limit(limit, per):
 
 # Define rate limiters for different routes
 signin_limiter = RateLimiter(200, 60)  # 100 requests per minute
-signup_limiter = RateLimiter(200, 60)  # 50 requests per minute
+signup_limiter = RateLimiter(500, 60)  # 500 requests per minute
 users_limiter = RateLimiter(200, 60)  # 200 requests per minute
 blind_dates_limiter = RateLimiter(200, 60)  # 100 requests per minute
 date_request_limiter = RateLimiter(300, 60)  # 300 requests per minute
@@ -233,7 +233,7 @@ def verify_otp():
         return jsonify({'error': 'Invalid OTP'}), 400
 
 @app.route('/signup', methods=['GET', 'POST'])
-@rate_limit(50, 60)
+@rate_limit(500, 60)
 def signup():
     if request.method == 'POST':
         app.logger.debug("Received POST request for signup")
