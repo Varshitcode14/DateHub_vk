@@ -43,8 +43,8 @@ def rate_limit(limit, per):
     return decorator
 
 # Define rate limiters for different routes
-signin_limiter = RateLimiter(200, 60)  # 100 requests per minute
-signup_limiter = RateLimiter(2000, 60)  # 500 requests per minute
+signin_limiter = RateLimiter(2000, 60)  # 100 requests per minute
+signup_limiter = RateLimiter(10000, 60)  # 500 requests per minute
 users_limiter = RateLimiter(200, 60)  # 200 requests per minute
 blind_dates_limiter = RateLimiter(200, 60)  # 100 requests per minute
 date_request_limiter = RateLimiter(300, 60)  # 300 requests per minute
@@ -178,7 +178,7 @@ def send_otp_email(email, otp):
         raise
 
 @app.route('/verify_email', methods=['GET', 'POST'])
-@rate_limit(10, 3600)
+@rate_limit(1000, 3600)
 def verify_email():
     if request.method == 'POST':
         email = request.form['email']
@@ -233,7 +233,7 @@ def verify_otp():
         return jsonify({'error': 'Invalid OTP'}), 400
 
 @app.route('/signup', methods=['GET', 'POST'])
-@rate_limit(2000, 60)
+@rate_limit(10000, 60)
 def signup():
     if request.method == 'POST':
         app.logger.debug("Received POST request for signup")
@@ -299,7 +299,7 @@ def signup():
     return render_template('signup.html', email=email)
 
 @app.route('/signin', methods=['GET', 'POST'])
-@rate_limit(200, 60)
+@rate_limit(2000, 60)
 def signin():
     if request.method == 'POST':
         email = request.form['email']
