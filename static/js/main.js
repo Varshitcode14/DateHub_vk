@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
           modalTitle.textContent = "User Profile"
           modalBody.innerHTML = `
             <div class="text-center mb-3">
-              <img src="${data.image ? "/static/uploads/" + data.image : "https://placehold.co/150x150"}" alt="${data.name}" class="img-fluid rounded-circle" style="max-width: 150px;">
+              <img src="${data.image_url || "https://placehold.co/150x150"}" alt="${data.name}" class="img-fluid rounded-circle" style="max-width: 150px;">
             </div>
             <p><strong>Name:</strong> ${data.name}</p>
             <p><strong>Email:</strong> ${data.email}</p>
