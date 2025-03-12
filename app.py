@@ -53,7 +53,7 @@ import random
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://datehub_vk_db_user:cf5Sb9vlvCeN58zSue3h1jSFUKHcEl07@dpg-cuf6jstumphs73aupcm0-a.oregon-postgres.render.com/datehub_vk_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://new_datehub_db_user:5SmRPdpXSjEWixAgbHr7vKoyvfvwTQdd@dpg-cv8r76bqf0us73bcdr70-a.oregon-postgres.render.com/new_datehub_db'
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max-limit
 
