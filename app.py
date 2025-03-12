@@ -160,7 +160,12 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
-    top_confessions = Confession.query.order_by(Confession.likes.desc()).limit(3).all()
+    try:
+        top_confessions = Confession.query.order_by(Confession.likes.desc()).limit(3).all()
+    except Exception as e:
+        app.logger.error(f"Error fetching confessions: {str(e)}")
+        top_confessions = []
+    
     if current_user.is_authenticated:
         return render_template('dashboard.html', top_confessions=top_confessions)
     return render_template('index.html', top_confessions=top_confessions)
@@ -685,6 +690,11 @@ def ratelimit_handler(e):
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
+        try:
+            # Create all tables
+            db.create_all()
+            app.logger.info("Database tables created successfully")
+        except Exception as e:
+            app.logger.error(f"Error creating database tables: {str(e)}")
     app.run(debug=True)
 
