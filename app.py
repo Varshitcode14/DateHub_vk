@@ -688,6 +688,28 @@ def update_profile():
 def ratelimit_handler(e):
     return jsonify(error="Rate limit exceeded. Please try again later."), 429
 
+# Add this new route at the end of your file, before the if __name__ == '__main__': block
+
+@app.route('/init-db', methods=['GET'])
+def init_db_route():
+    try:
+        db.create_all()
+        # Check if tables were created
+        from sqlalchemy import inspect
+        inspector = inspect(db.engine)
+        tables = inspector.get_table_names()
+        
+        return jsonify({
+            'message': 'Database initialization attempted',
+            'tables': tables,
+            'success': 'confession' in tables and 'user' in tables
+        }), 200
+    except Exception as e:
+        app.logger.error(f"Error initializing database: {str(e)}")
+        return jsonify({'error': f'Database initialization failed: {str(e)}'}), 500
+
+
+
 if __name__ == '__main__':
     with app.app_context():
         try:
